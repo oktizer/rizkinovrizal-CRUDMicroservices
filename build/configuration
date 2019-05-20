@@ -1,0 +1,9 @@
+##### EDITABLE but do not delete below configuration, unless you know the consequences ###
+
+export NODE_ENV=production
+export APP_NAME=api-checkUrlSite
+export APP_PORT=3958
+
+export MONGO_PORT=41958
+export MONGO_DB=db-checkurlsite
+export MONGO_URL=mongodb://mongodb:27017/db-checkurlsite
