@@ -12,30 +12,27 @@ module.exports = function (TOOLS, MODULES) {
             return new Promise((resolve, reject) => {
                 switch (params.method) {
                 case 'POST':
-                    crudService.createNewCustom(params.schema, params.value, (err) => {
+                    crudService.createNewCustom(params.schema, params.value, (err, result) => {
                         let resultData;
                         if (err) {
                             resultData = {code: 500, status: 'Failed', message: 'Failed Save Data ' + params.schema, err: err.message};
 
                             reject(resultData);
                         } else {
-                            resultData = {code: 200, message: 'Successfully saving ' + params.schema + ' data'};
-
+                            resultData = {code: 200, message: 'Successfully saving ' + params.schema + ' data', result: result};
                             resolve(resultData);
                         }
                     });
 
                     break;
                 case 'PUT':
-                    crudService.updateCustom(params.schema, params.where, params.value, (err) => {
+                    crudService.updateCustom(params.schema, params.where, params.value, (err, result) => {
                         let resultData;
                         if (err) {
                             resultData = {code: 500, status: 'Failed', message: 'Failed Update Data ' + params.schema, err: err.message};
-
                             reject(resultData);
                         } else {
-                            resultData = {code: 200, message: 'Successfully update ' + params.schema + ' data'};
-
+                            resultData = {code: 200, message: 'Successfully update ' + params.schema + ' data', result: result._doc};
                             resolve(resultData);
                         }
                     });
@@ -62,7 +59,6 @@ module.exports = function (TOOLS, MODULES) {
                             reject(resultData);
                         } else {
                             resultData = { code: 200, message: 'Succesfully deleted data ' + params.schema };
-
                             resolve({ code: 200, message: 'Succesfully deleted data ' + params.schema });
                         }
                     });

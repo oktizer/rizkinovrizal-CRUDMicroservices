@@ -73,32 +73,40 @@ describe('Service: CRUDService', function () {
     });
 
     describe('Update existing data', function () {
-        it('should response new value in field which update before', async () => {
-            const result = await crudService.updateCustom('UserTest',
+        it('should response new value in field which update before', function (done) {
+            crudService.updateCustom('UserTest',
                 {
                     accountNumber: '1234567890'
                 },
                 {
                     emailAddress: 'rizkinovrizal@gmail.com'
+                },
+                function (err, result) {
+                    if (err) {
+                        done();
+                    }
+                    should.exist(result);
+                    result.should.be.an('object');
+                    result.accountNumber.should.be.a('string');
+                    result.accountNumber.should.equal('1234567890');
+                    result.emailAddress.should.be.a('string');
+                    result.emailAddress.should.equal('rizkinovrizal@gmail.com');
+                    done();
                 });
-            should.exist(result.result);
-            result.code.should.equal(200);
-            result.result.should.be.an('object');
-            result.result.accountNumber.should.be.a('string');
-            result.result.accountNumber.should.equal('1234567890');
-            result.result.emailAddress.should.be.a('string');
-            result.result.emailAddress.should.equal('rizkinovrizal@gmail.com');
         });
     });
 
     describe('Delete existing data', function () {
         it('should response object has been deleted', function (done) {
-            crudService.findOneCustomAndDelete('SiteTest', {_id: '5c9792ff42b0a51ceb02748d'}, function (err, result) {
-                should.not.exist(err);
-                should.exist(result);
-                result.should.be.an('object');
-                done();
-            });
+            crudService.findOneCustomAndDelete('UserTest',
+                {
+                    accountNumber: '1234567890'
+                }, function (err, result) {
+                    should.not.exist(err);
+                    should.exist(result);
+                    result.should.be.an('object');
+                    done();
+                });
         });
     });
 });

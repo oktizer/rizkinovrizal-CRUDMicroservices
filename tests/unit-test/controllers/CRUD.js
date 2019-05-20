@@ -80,6 +80,7 @@ describe('Controller: CRUDController', function () {
             result.should.be.an('object');
             result.code.should.be.a('number');
             result.code.should.equal(200);
+            result.result.emailAddress.should.equal('oktizer@gmail.com');
             result.message.should.be.a('string');
             result.message.should.equal('Successfully update UserTest data');
         });

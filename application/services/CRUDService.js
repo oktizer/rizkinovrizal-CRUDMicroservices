@@ -33,24 +33,13 @@ module.exports = function (TOOLS) {
             });
         },
 
-        updateCustom: function (schemaName, where, attributes) {
-            return new Promise((resolve, reject) => {
-                schema[schemaName].findOneAndUpdate(where, {$set: attributes}, {new: true}, (err, result) => {
-                    if (err) {
-                        let errorRes = {
-                            code: 500,
-                            err: err
-                        };
-                        reject(errorRes);
-                    } else {
-                        let successRes = {
-                            code: 200,
-                            message: 'Successfully update ' + schemaName + ' data',
-                            result: result
-                        };
-                        resolve(successRes);
-                    }
-                });
+        updateCustom: function (schemaName, where, attributes, callback) {
+            schema[schemaName].findOneAndUpdate(where, {$set: attributes}, {new: true}, (err, result) => {
+                if (err) {
+                    return callback(err, null);
+                } else {
+                    callback(null, result);
+                }
             });
         },
 
