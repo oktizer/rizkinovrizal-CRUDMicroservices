@@ -28,7 +28,8 @@ module.exports = function (TOOLS, MODULES) {
         },
 
         /**
-         * Interface for get list all user from db
+         * Interface for get list one vehicle data from db
+         * if vehicle data existing in redis, get from redis, if does'nt get from db
          * @param previousData {Object} Data from previous handler
          * @param req {Object} Request object (express)
          * @param res {Object} Response object (express)
@@ -37,12 +38,19 @@ module.exports = function (TOOLS, MODULES) {
 
         getListOneVehicle: async function (previousData, req, res, next) {
             let schema = joi.object().keys({
-                nopol: joi.string().required('')
+                noPol: joi.string().required('')
             });
+            let result;
             try {
                 let value = await authController.validateInputParams(schema, req.query);
-                const result = await CRUDController.findOneController({where: value, method: 'GET', select: null, schema: 'RizkiNovrizalVehicle'});
-                next(null, result.result);
+                let existRedis = await RedisController.existsRedis({key: value.noPol});
+                if (existRedis === true) {
+                    result = await RedisController.getRedis({key: value.noPol});
+                } else {
+                    let resultDB = await CRUDController.findOneController({where: value, method: 'GET', select: null, schema: 'RizkiNovrizalVehicle'});
+                    result = resultDB.result;
+                }
+                next(null, result);
             } catch (err) {
                 return next(err, null);
             }
@@ -66,7 +74,7 @@ module.exports = function (TOOLS, MODULES) {
             try {
                 let value = await authController.validateInputParams(schema, req.body);
                 let result = await CRUDController.crudController({value: value, method: req.method, schema: 'RizkiNovrizalVehicle'});
-                let resultRedis = await RedisController.setRedis({id: value.noPol, Obj: value});
+                let resultRedis = await RedisController.setRedis({key: value.noPol, Obj: result.result._doc});
                 logger.info('Saving Data to Redis = ', resultRedis);
                 next(null, result);
             } catch (err) {
@@ -92,6 +100,8 @@ module.exports = function (TOOLS, MODULES) {
             try {
                 let value = await authController.validateInputParams(schema, req.body);
                 let result = await CRUDController.crudController({value: value, where: value.accountNumber, method: req.method, schema: 'RizkiNovrizalVehicle'});
+                let resultRedis = await RedisController.setRedis({key: value.noPol, Obj: result.result});
+                logger.info('Update Data in Redis = ', resultRedis);
                 next(null, result);
             } catch (err) {
                 return next(err, null);
@@ -113,6 +123,8 @@ module.exports = function (TOOLS, MODULES) {
             try {
                 let value = await authController.validateInputParams(schema, req.body);
                 const resultDelete = await CRUDController.crudController({where: value, method: req.method, schema: 'RizkiNovrizalVehicle'});
+                const resultRedis = await RedisController.deleteRedis({key: value.noPol});
+                logger.info('Delete Data in Redis = ', resultRedis);
                 next(null, resultDelete);
             } catch (err) {
                 return next(err, null);

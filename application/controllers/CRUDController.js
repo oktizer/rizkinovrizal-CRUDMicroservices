@@ -3,6 +3,7 @@
 module.exports = function (TOOLS, MODULES) {
     const crudService = TOOLS.SERVICES.CRUDService;
     const joi = MODULES.JOI;
+    let logger = TOOLS.LOG;
     return {
         /**
          * Get message as a data for response
@@ -76,10 +77,11 @@ module.exports = function (TOOLS, MODULES) {
                     let resultData;
                     if (err) {
                         resultData = {code: 500, status: 'Failed', message: 'Failed get data ' + params.schema, err: err.message};
+                        logger.error(resultData);
                         reject(resultData);
                     } else {
                         resultData = { code: 200, message: 'Successfully get data ' + params.schema };
-
+                        logger.info(resultData);
                         resolve({code: 200, message: 'Successfully get data ' + params.schema, result: result});
                     }
                 });

@@ -15,6 +15,12 @@ module.exports = function (TOOLS, MODULES, CONSTANTS) {
     APP.use(MODULES.EXPRESS_LOGGER.create(TOOLS.LOG));
     APP.use(MODULES.METHOD_OVERRIDE());
 
+    // content filter every input data
+    APP.use(MODULES.CONTENT_FILTER());
+
+    // Secure Express HTTP Headers
+    APP.use(MODULES.HELMET());
+
     // Make directory '/public' as a static file content
     APP.use('/public', MODULES.EXPRESS.static(CONSTANTS.PATH.PUBLIC_FILE_PATH));
 
