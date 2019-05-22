@@ -17,6 +17,7 @@ module.exports = {
     HTTP: require('http'),
     HELMET: require('helmet'),
     JOI: require('joi'),
+    JWT: require('jsonwebtoken'),
     METHOD_OVERRIDE: require('method-override'),
     MONGOOSE: require('mongoose'),
     MULTER: require('multer'),

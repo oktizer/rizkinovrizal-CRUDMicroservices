@@ -7,7 +7,7 @@ module.exports = [
         fileField: null,
         fileObjArray: 'none',
         handlers: [
-            // 'AuthInterface.authenticate',
+            'AuthInterface.tokenAuthenticated',
             'CRUDUserInterface.insertUser'
         ]
     },

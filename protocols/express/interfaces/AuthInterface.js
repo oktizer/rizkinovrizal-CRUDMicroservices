@@ -6,7 +6,8 @@
 
 module.exports = function (TOOLS, MODULES, CONSTANTS) {
     let authController = TOOLS.CONTROLLERS.AuthController;
-    let logger = TOOLS.LOG;
+    const RedisController = TOOLS.CONTROLLERS.RedisController;
+    const joi = MODULES.JOI;
 
     return {
         /**
@@ -36,6 +37,27 @@ module.exports = function (TOOLS, MODULES, CONSTANTS) {
                 });
             } else {
                 let error = {code: 401, message: 'access token not exist, please login again'};
+                return next(error, null);
+            }
+        },
+        tokenAuthenticated: async (previousData, req, res, next) => {
+            let schema = joi.object().keys({
+                api_key: joi.string().required(),
+                authorization: joi.string().required()
+            });
+            let result;
+            try {
+                let value = await authController.validateInputParams(schema, req.headers);
+                let existRedis = await RedisController.existsRedis({key: value.api_key});
+                let token = value.authorization.split(/\s+/);
+                if (existRedis === true) {
+                    let resultRedis = await RedisController.getRedis({key: value.api_key});
+                    result = await authController.authToken(resultRedis, token[1]);
+                    next(null, result);
+                } else {
+                    return next({code: 500, message: 'Access token expired'}, null);
+                }
+            } catch (error) {
                 return next(error, null);
             }
         }

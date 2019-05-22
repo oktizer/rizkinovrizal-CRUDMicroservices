@@ -7,7 +7,7 @@
 module.exports = function (TOOLS, MODULES) {
     const RedisService = TOOLS.SERVICES.RedisService;
     const joi = MODULES.JOI;
-    // let logger = TOOLS.LOG;
+    const jwtService = TOOLS.SERVICES.JwtService;
 
     return {
         /**
@@ -15,18 +15,23 @@ module.exports = function (TOOLS, MODULES) {
          * @param params {Object} Authentication object contains 'accessToken'
          * @param callback {Function} Callback function
          */
-        authLocal: function (params, callback) {
-            const key = params.accessToken;
-            RedisService.getFromRedis(key, function (err, result) {
-                if (err) {
-                    callback(err, null);
+
+        authToken: function (resultRedis, token) {
+            return new Promise((resolve, reject) => {
+                if (resultRedis.token === token) {
+                    jwtService.decodeJWT(resultRedis.token, (err, result) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve(result);
+                        }
+                    });
                 } else {
-                    result = JSON.parse(result);
-                    if (result) {
-                        callback(null, {userData: result});
-                    } else {
-                        callback(null, null);
-                    }
+                    let errFailedToken = {
+                        code: 500,
+                        message: 'Wrong token, token expired'
+                    };
+                    reject(errFailedToken);
                 }
             });
         },

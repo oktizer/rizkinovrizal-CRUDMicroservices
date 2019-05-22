@@ -6,9 +6,21 @@ chai.use(chaiHttp);
 
 describe('API Endpoints ', function () {
     let path = '/user/crud';
+    let headers = [{
+        key: 'Api_key',
+        value: 'f7666c7b3e7b730c70a11c4fa0ca87b06ba59960'
+    },
+    {
+        key: 'Authorization',
+        value: 'Bearer eyJhbGciOiJIUzI1NiJ9.cml6a2lub3ZyaXphbEBnbWFpbC5jb20.2hVlSDJAqqz8bJ_zEJl8xWDBAO1j1swPYbuT6W3gaws'
+    }];
     describe('POST: Insert User Data', function () {
         it('should return new data', function (done) {
-            chai.request(global.express_server).post(path).send(
+            let chaiRequest = chai.request(global.express_server).post(path);
+            for (let i = 0; i < headers.length; i++) {
+                chaiRequest.set(headers[ i ].key, headers[ i ].value);
+            }
+            chaiRequest.send(
                 {
                     'userName': 'rizkinovrizal',
                     'accountNumber': '0987654321',
