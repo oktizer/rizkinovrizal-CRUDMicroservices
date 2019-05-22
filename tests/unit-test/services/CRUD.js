@@ -46,13 +46,13 @@ describe('Service: CRUDService', function () {
 
     describe('Get data by account Number', function () {
         it('should response detail data with account Number = 1234567890', function (done) {
-            crudService.getAll('UserTest',
+            crudService.getOne('UserTest',
                 {
                     accountNumber: '1234567890'
-                }, null, function (err, result) {
+                }, function (err, result) {
                     should.not.exist(err);
                     should.exist(result);
-                    result.should.be.an('array');
+                    result.should.be.an('object');
                     done();
                 });
         });
@@ -60,13 +60,13 @@ describe('Service: CRUDService', function () {
 
     describe('Get data by identity Number', function () {
         it('should response detail data with identity Number = 1472012705880000', function (done) {
-            crudService.getAll('UserTest',
+            crudService.getOne('UserTest',
                 {
                     identityNumber: '1472012705880000'
-                }, null, function (err, result) {
+                }, function (err, result) {
                     should.not.exist(err);
                     should.exist(result);
-                    result.should.be.an('array');
+                    result.should.be.an('object');
                     done();
                 });
         });

@@ -33,6 +33,16 @@ module.exports = function (TOOLS) {
             });
         },
 
+        getOne: function (schemaName, where, callback) {
+            schema[schemaName].findOne(where, (err, result) => {
+                if (err) {
+                    return callback(err, null);
+                } else {
+                    callback(null, result);
+                }
+            });
+        },
+
         updateCustom: function (schemaName, where, attributes, callback) {
             schema[schemaName].findOneAndUpdate(where, {$set: attributes}, {new: true}, (err, result) => {
                 if (err) {

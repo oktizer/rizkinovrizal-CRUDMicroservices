@@ -11,7 +11,7 @@ describe('Controller: CRUDController', function () {
 
     describe('Controller for create data', () => {
         it('should return result object and message', async () => {
-            let result = await CRUDController.crudUserController({
+            let result = await CRUDController.crudController({
                 schema: 'UserTest',
                 value: {
                     userName: 'oktizer',
@@ -29,9 +29,9 @@ describe('Controller: CRUDController', function () {
         });
     });
 
-    describe('Controller for get data', () => {
+    describe('Controller for get all data', () => {
         it('should return result object and message', async () => {
-            let result = await CRUDController.crudUserController({
+            let result = await CRUDController.crudController({
                 schema: 'UserTest',
                 value: null,
                 select: null,
@@ -46,9 +46,9 @@ describe('Controller: CRUDController', function () {
         });
     });
 
-    describe('Controller for get user data by accountNumber ', () => {
+    describe('Controller for get one user data by accountNumber ', () => {
         it('should return result object and message', async () => {
-            let result = await CRUDController.crudUserController({
+            let result = await CRUDController.findOneController({
                 schema: 'UserTest',
                 where: {
                     accountNumber: '12334545767867'
@@ -61,13 +61,32 @@ describe('Controller: CRUDController', function () {
             result.code.should.equal(200);
             result.message.should.be.a('string');
             result.message.should.equal('Successfully get data UserTest');
-            result.result.should.be.an('array');
+            result.result.should.be.an('object');
+        });
+    });
+
+    describe('Controller for get one user data by Identity Number', () => {
+        it('should return result object and message', async () => {
+            let result = await CRUDController.findOneController({
+                schema: 'UserTest',
+                where: {
+                    identityNumber: '1472012705880021'
+                },
+                select: null,
+                method: 'GET'});
+            should.exist(result);
+            result.should.be.an('object');
+            result.code.should.be.a('number');
+            result.code.should.equal(200);
+            result.message.should.be.a('string');
+            result.message.should.equal('Successfully get data UserTest');
+            result.result.should.be.an('object');
         });
     });
 
     describe('Controller for update data', () => {
         it('should return result object and message', async () => {
-            let result = await CRUDController.crudUserController({
+            let result = await CRUDController.crudController({
                 schema: 'UserTest',
                 where: {
                     accountNumber: '12334545767867'
@@ -86,28 +105,9 @@ describe('Controller: CRUDController', function () {
         });
     });
 
-    describe('Controller for get user data by Identity Number', () => {
-        it('should return result object and message', async () => {
-            let result = await CRUDController.crudUserController({
-                schema: 'UserTest',
-                where: {
-                    identityNumber: '1472012705880021'
-                },
-                select: null,
-                method: 'GET'});
-            should.exist(result);
-            result.should.be.an('object');
-            result.code.should.be.a('number');
-            result.code.should.equal(200);
-            result.message.should.be.a('string');
-            result.message.should.equal('Successfully get data UserTest');
-            result.result.should.be.an('array');
-        });
-    });
-
     describe('Controller for delete data by accountNumber', () => {
         it('should return result object and message', async () => {
-            let result = await CRUDController.crudUserController({
+            let result = await CRUDController.crudController({
                 schema: 'UserTest',
                 value: {
                     accountNumber: '12334545767867'

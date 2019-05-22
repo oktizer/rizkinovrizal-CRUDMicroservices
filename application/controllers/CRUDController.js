@@ -8,7 +8,7 @@ module.exports = function (TOOLS, MODULES) {
          * Get message as a data for response
          */
 
-        crudUserController: (params) => {
+        crudController: (params) => {
             return new Promise((resolve, reject) => {
                 switch (params.method) {
                 case 'POST':
@@ -70,6 +70,21 @@ module.exports = function (TOOLS, MODULES) {
             });
         },
 
+        findOneController: (params) => {
+            return new Promise((resolve, reject) => {
+                crudService.getOne(params.schema, params.where, (err, result) => {
+                    let resultData;
+                    if (err) {
+                        resultData = {code: 500, status: 'Failed', message: 'Failed get data ' + params.schema, err: err.message};
+                        reject(resultData);
+                    } else {
+                        resultData = { code: 200, message: 'Successfully get data ' + params.schema };
+
+                        resolve({code: 200, message: 'Successfully get data ' + params.schema, result: result});
+                    }
+                });
+            });
+        },
         /**
          Creator: @rizki
          Description: controller for joi validation

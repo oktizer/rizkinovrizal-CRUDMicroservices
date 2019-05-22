@@ -42,6 +42,9 @@ module.exports = function (MODULES, CONSTANTS, callback) {
         });
         TOOLS.MULTER = MODULES.MULTER({storage: storage});
 
+        // Initialize Redis database
+        TOOLS.REDIS_CLIENT = require(CONSTANTS.PATH.REDIS_CLIENT)(MODULES);
+
         // Initialize mongoose (Mongoose)
         TOOLS.SCHEMA = require(CONSTANTS.PATH.SCHEMA_LOADER)(MODULES);
 

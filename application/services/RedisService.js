@@ -9,7 +9,7 @@ module.exports = function (TOOLS, MODULES, CONSTANTS) {
 
     return {
         /**
-         * Get authentication data from redis
+         * Get data from redis
          * @param key {String} Redis data record key
          * @param callback {Function} Callback function
          */
@@ -18,13 +18,38 @@ module.exports = function (TOOLS, MODULES, CONSTANTS) {
         },
 
         /**
-         * Write authentication data to redis
+         * Write data to redis
          * @param key {String} Redis data record key
          * @param obj {String} Redis data record value in JSON string format
          */
-        saveRedis: function (key, obj) {
-            redisClient.set(key, obj);
-            // redisClient.expire(key, 1800);
+        saveRedis: function (key, obj, callback) {
+            redisClient.set(key, obj, callback);
+            // redisClient.expire(key, 18000)
+        },
+
+        updateRedis: function (key, obj, callback) {
+            redisClient.getset(key, obj, callback);
+            // redisClient.expire(key, 18000)
+        },
+
+        /**
+         * Check if key exists in redis
+         * @param key {String} Redis data record key
+         * @param obj {String} Redis data record value in JSON string format
+         */
+
+        existsRedis: function (key, callback) {
+            redisClient.exists(key, callback);
+        },
+
+        /**
+         * Delete data in redis
+         * @param key {String} Redis data record key
+         * @param obj {String} Redis data record value in JSON string format
+         */
+
+        deleteRedis: function (key, callback) {
+            redisClient.del(key, callback);
         }
     };
 };

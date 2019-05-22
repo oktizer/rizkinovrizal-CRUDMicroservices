@@ -5,8 +5,9 @@
 'use strict';
 
 module.exports = function (TOOLS, MODULES) {
-    let RedisService = TOOLS.SERVICES.RedisService;
-    let joi = MODULES.JOI;
+    const RedisService = TOOLS.SERVICES.RedisService;
+    const joi = MODULES.JOI;
+    // let logger = TOOLS.LOG;
 
     return {
         /**
@@ -15,7 +16,7 @@ module.exports = function (TOOLS, MODULES) {
          * @param callback {Function} Callback function
          */
         authLocal: function (params, callback) {
-            let key = params.accessToken;
+            const key = params.accessToken;
             RedisService.getFromRedis(key, function (err, result) {
                 if (err) {
                     callback(err, null);
