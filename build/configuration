@@ -3,10 +3,10 @@
 export NODE_ENV=production
 export APP_NAME=RizkiNovrizal-crudMicroServices
 export APP_PORT=3958
-export REDIS_PORT=6398
+export REDIS_PORT=6379
 export redis://redis:6379
 
 export MONGO_PORT=41958
-MONGO_DB=db-RizkiNovrizal
+export MONGO_DB=db-RizkiNovrizal
 export MONGO_URL=mongodb://mongodb:27017/db-User
 export JWT_SECRET=bDHz544I7VX9gcPoi5lJiuqKGygUBRYPgxXcRIMZ3Qg

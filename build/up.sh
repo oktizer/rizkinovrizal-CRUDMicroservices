@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 source configuration
 export APP_NAME
 docker-compose --project-name "$APP_NAME" up -d --build web
