@@ -8,7 +8,7 @@ describe('API Endpoints ', function () {
     let path = '/vehicle/crud';
     let headers = [{
         key: 'Api_key',
-        value: '333d5c56330ec7fe8751d39d3d6a51734e21a6ac'
+        value: '9049975b0bcd02fade6c109893c30124736a880e'
     },
     {
         key: 'Authorization',

@@ -6,6 +6,6 @@ ADD . /app
 
 # Install app dependencies
 RUN npm install
-RUN npm test
+#RUN npm test
 
 CMD ["node", "index.js" ]
