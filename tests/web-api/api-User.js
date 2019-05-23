@@ -8,7 +8,7 @@ describe('API Endpoints ', function () {
     let path = '/user/crud';
     let headers = [{
         key: 'Api_key',
-        value: 'f7666c7b3e7b730c70a11c4fa0ca87b06ba59960'
+        value: '333d5c56330ec7fe8751d39d3d6a51734e21a6ac'
     },
     {
         key: 'Authorization',
@@ -20,14 +20,18 @@ describe('API Endpoints ', function () {
             for (let i = 0; i < headers.length; i++) {
                 chaiRequest.set(headers[ i ].key, headers[ i ].value);
             }
-            chaiRequest.send(
-                {
-                    'userName': 'rizkinovrizal',
-                    'accountNumber': '0987654321',
-                    'emailAddress': 'rizkinovrizal@gmail.com',
-                    'identityNumber': '147201270588'
-                }).end(function (err, result) {
+            chaiRequest.send({
+                'userName': 'rizkinovrizal',
+                'accountNumber': '0987654321',
+                'emailAddress': 'rizkinovrizal@gmail.com',
+                'identityNumber': '147201270588'
+            }).end(function (err, result) {
                 if (err) {
+                    let errData = err.response.body;
+                    should.exist(err);
+                    should.exist(errData);
+                    errData.should.be.an('object');
+                    errData.code.should.equal(500);
                     done(err);
                 } else {
                     let data = result.body.data.result;
@@ -54,7 +58,11 @@ describe('API Endpoints ', function () {
 
     describe('GET: Get List User', function () {
         it('should return list of user data', function (done) {
-            chai.request(global.express_server).get(path).end(function (err, response) {
+            let chaiRequest = chai.request(global.express_server).get(path);
+            for (let i = 0; i < headers.length; i++) {
+                chaiRequest.set(headers[ i ].key, headers[ i ].value);
+            }
+            chaiRequest.end(function (err, response) {
                 if (err) {
                     done(err);
                 } else {
@@ -70,7 +78,11 @@ describe('API Endpoints ', function () {
     describe('GET: Get one user data', function () {
         let pathOne = '/user/crud/one';
         it('should return one data by accountNumber', function (done) {
-            chai.request(global.express_server).get(pathOne).query(
+            let chaiRequest = chai.request(global.express_server).get(pathOne);
+            for (let i = 0; i < headers.length; i++) {
+                chaiRequest.set(headers[ i ].key, headers[ i ].value);
+            }
+            chaiRequest.query(
                 {
                     accountNumber: '0987654321'
                 }
@@ -95,7 +107,11 @@ describe('API Endpoints ', function () {
             });
         });
         it('should return one data by identity Number', function (done) {
-            chai.request(global.express_server).get(pathOne).query(
+            let chaiRequest = chai.request(global.express_server).get(pathOne);
+            for (let i = 0; i < headers.length; i++) {
+                chaiRequest.set(headers[ i ].key, headers[ i ].value);
+            }
+            chaiRequest.query(
                 {
                     identityNumber: '147201270588'
                 }
@@ -123,7 +139,11 @@ describe('API Endpoints ', function () {
 
     describe('POST: Update User Data', function () {
         it('should return after update data', function (done) {
-            chai.request(global.express_server).put(path).send(
+            let chaiRequest = chai.request(global.express_server).put(path);
+            for (let i = 0; i < headers.length; i++) {
+                chaiRequest.set(headers[ i ].key, headers[ i ].value);
+            }
+            chaiRequest.send(
                 {
                     'accountNumber': '0987654321',
                     'emailAddress': 'novrizalrizki@gmail.com'
@@ -155,7 +175,11 @@ describe('API Endpoints ', function () {
 
     describe('DELETE: Delete User data by accountNumber', function () {
         it('should delete selected user data and return response message', function (done) {
-            chai.request(global.express_server).delete(path).send(
+            let chaiRequest = chai.request(global.express_server).delete(path);
+            for (let i = 0; i < headers.length; i++) {
+                chaiRequest.set(headers[ i ].key, headers[ i ].value);
+            }
+            chaiRequest.send(
                 {
                     'accountNumber': '0987654321'
                 }

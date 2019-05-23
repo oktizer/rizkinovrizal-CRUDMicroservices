@@ -7,7 +7,7 @@ module.exports = [
         fileField: null,
         fileObjArray: 'none',
         handlers: [
-            // 'AuthInterface.authenticate',
+            'AuthInterface.tokenAuthenticated',
             'CRUDVehicleInterface.insertVehicle'
         ]
     },
@@ -17,7 +17,7 @@ module.exports = [
         fileField: null,
         fileObjArray: 'none',
         handlers: [
-            // 'AuthInterface.authenticate',
+            'AuthInterface.tokenAuthenticated',
             'CRUDVehicleInterface.getListVehicle'
         ]
     },
@@ -27,7 +27,7 @@ module.exports = [
         fileField: null,
         fileObjArray: 'none',
         handlers: [
-            // 'AuthInterface.authenticate',
+            'AuthInterface.tokenAuthenticated',
             'CRUDVehicleInterface.getListOneVehicle'
         ]
     },
@@ -37,7 +37,7 @@ module.exports = [
         fileField: null,
         fileObjArray: 'none',
         handlers: [
-            // 'AuthInterface.authenticate',
+            'AuthInterface.tokenAuthenticated',
             'CRUDVehicleInterface.updateVehicle'
         ]
     },
@@ -47,7 +47,7 @@ module.exports = [
         fileField: null,
         fileObjArray: 'none',
         handlers: [
-            // 'AuthInterface.authenticate',
+            'AuthInterface.tokenAuthenticated',
             'CRUDVehicleInterface.deleteVehicle'
         ]
     }

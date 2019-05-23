@@ -17,7 +17,7 @@ module.exports = [
         fileField: null,
         fileObjArray: 'none',
         handlers: [
-            // 'AuthInterface.authenticate',
+            'AuthInterface.tokenAuthenticated',
             'CRUDUserInterface.getListUser'
         ]
     },
@@ -27,7 +27,7 @@ module.exports = [
         fileField: null,
         fileObjArray: 'none',
         handlers: [
-            // 'AuthInterface.authenticate',
+            'AuthInterface.tokenAuthenticated',
             'CRUDUserInterface.getListOneUser'
         ]
     },
@@ -37,7 +37,7 @@ module.exports = [
         fileField: null,
         fileObjArray: 'none',
         handlers: [
-            // 'AuthInterface.authenticate',
+            'AuthInterface.tokenAuthenticated',
             'CRUDUserInterface.updateUser'
         ]
     },
@@ -47,7 +47,7 @@ module.exports = [
         fileField: null,
         fileObjArray: 'none',
         handlers: [
-            // 'AuthInterface.authenticate',
+            'AuthInterface.tokenAuthenticated',
             'CRUDUserInterface.deleteUser'
         ]
     }

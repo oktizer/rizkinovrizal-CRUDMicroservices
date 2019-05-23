@@ -6,9 +6,21 @@ chai.use(chaiHttp);
 
 describe('API Endpoints ', function () {
     let path = '/vehicle/crud';
+    let headers = [{
+        key: 'Api_key',
+        value: '333d5c56330ec7fe8751d39d3d6a51734e21a6ac'
+    },
+    {
+        key: 'Authorization',
+        value: 'Bearer eyJhbGciOiJIUzI1NiJ9.cml6a2lub3ZyaXphbEBnbWFpbC5jb20.2hVlSDJAqqz8bJ_zEJl8xWDBAO1j1swPYbuT6W3gaws'
+    }];
     describe('POST: Insert vehicle Data', function () {
         it('should save and return new data after insert', function (done) {
-            chai.request(global.express_server).post(path).send(
+            let chaiRequest = chai.request(global.express_server).post(path);
+            for (let i = 0; i < headers.length; i++) {
+                chaiRequest.set(headers[ i ].key, headers[ i ].value);
+            }
+            chaiRequest.send(
                 {
                     'noPol': 'B 1234 PN',
                     'brand': 'Toyota Camry',
@@ -40,7 +52,11 @@ describe('API Endpoints ', function () {
 
     describe('GET: Get List Vehicle', function () {
         it('should return list of vehicle data', function (done) {
-            chai.request(global.express_server).get(path).end(function (err, response) {
+            let chaiRequest = chai.request(global.express_server).get(path);
+            for (let i = 0; i < headers.length; i++) {
+                chaiRequest.set(headers[ i ].key, headers[ i ].value);
+            }
+            chaiRequest.end(function (err, response) {
                 if (err) {
                     done(err);
                 } else {
@@ -56,7 +72,11 @@ describe('API Endpoints ', function () {
     describe('GET: Get one vehicle data', function () {
         let pathOne = '/vehicle/crud/one';
         it('should return one vehicle data detail by noPol', function (done) {
-            chai.request(global.express_server).get(pathOne).query(
+            let chaiRequest = chai.request(global.express_server).get(pathOne);
+            for (let i = 0; i < headers.length; i++) {
+                chaiRequest.set(headers[ i ].key, headers[ i ].value);
+            }
+            chaiRequest.query(
                 {
                     noPol: 'B 1234 PN'
                 }
@@ -84,7 +104,11 @@ describe('API Endpoints ', function () {
 
     describe('POST: Update Vehicle Data', function () {
         it('should return data after update', function (done) {
-            chai.request(global.express_server).put(path).send(
+            let chaiRequest = chai.request(global.express_server).put(path);
+            for (let i = 0; i < headers.length; i++) {
+                chaiRequest.set(headers[ i ].key, headers[ i ].value);
+            }
+            chaiRequest.send(
                 {
                     'noPol': 'B 1234 PN',
                     'brand': 'Toyota Corolla',
@@ -118,7 +142,11 @@ describe('API Endpoints ', function () {
 
     describe('DELETE: Delete vehicle data by noPol', function () {
         it('should delete selected vehicle data and return response message', function (done) {
-            chai.request(global.express_server).delete(path).send(
+            let chaiRequest = chai.request(global.express_server).delete(path);
+            for (let i = 0; i < headers.length; i++) {
+                chaiRequest.set(headers[ i ].key, headers[ i ].value);
+            }
+            chaiRequest.send(
                 {
                     'noPol': 'B 1234 PN'
                 }
