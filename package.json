@@ -1,7 +1,7 @@
 {
-  "name": "checkHealthSite",
+  "name": "RizkiNovrizal-CRUDMicroServices",
   "version": "1.0.0",
-  "description": "API for checking health site",
+  "description": "API for CRUD User and Vehicle data",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
