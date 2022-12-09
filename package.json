@@ -17,7 +17,7 @@
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "content-filter": "^1.1.2",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "express-request-logger": "0.0.3",
     "helmet": "^3.18.0",
     "joi": "^14.3.1",
